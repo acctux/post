@@ -30,9 +30,6 @@ source "$SCRIPT_DIR/ark.sh"
 # source "$SCRIPT_DIR/conf/conf_sysctl.sh"
 
 # Runtime variables (initially empty)
-DISK=""
-ROOT_PASSWORD=""
-USER_PASSWORD=""
 
 #######################################
 # Main

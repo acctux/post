@@ -1,0 +1,180 @@
+/* === Global Styles === */
+* {
+    min-height: 20px;
+    background-color: transparent;
+    font-size: 14px;
+    letter-spacing: 1.5px;
+    font-family:
+        "CaskaydiaMono Nerd Font Light", "Roboto Nerd Font", sans-serif;
+    transition: all 0.75s ease;
+}
+
+window#waybar {
+    background-color: #101013;
+    min-height: 20px;
+    transition:
+        background-color 0.75s ease,
+        color 0.75s ease;
+}
+window#waybar.hidden {
+    opacity: 0.5;
+}
+
+#workspaces button {
+    all: initial;
+    transition: all 0.75s ease;
+    border-radius: 4px;
+    padding: 0 14px;
+    margin: 0 3px;
+    box-shadow: inset 0 0 0 1px #1e3a8a;
+    color: #e5e7eb;
+}
+
+#workspaces button.active,
+#workspaces button:hover {
+    box-shadow: inset 0 0 0 1px #10b981;
+    color: #a5b4fc;
+}
+
+#workspaces button.urgent {
+    background-color: #c24646;
+    color: #fff;
+}
+
+/* === Shared Module Styles === */
+#memory,
+#battery,
+#backlight,
+#pulseaudio,
+#power-profiles-daemon,
+#tray,
+#custom-logo,
+#custom-cpu-memory,
+#network,
+#clock,
+#custom-updates,
+#custom-folders,
+#custom-power,
+#window,
+#custom-favs {
+    border-radius: 4px;
+    padding: 0 10px;
+}
+
+/* === Battery Special States === */
+#battery.critical,
+#battery.warning {
+    box-shadow: inset 0 0 0 1px #c24646;
+    color: #c24646;
+}
+#battery.good {
+    box-shadow: inset 0 0 0 1px #c24646;
+    color: #10b981;
+}
+#battery.charging {
+    box-shadow: inset 0 0 0 1px #10b981;
+    color: #10b981;
+}
+
+/* === Icon button styles === */
+#custom-power,
+#custom-logo {
+    color: #a5b4fc;
+    font-size: 17px;
+}
+
+#custom-power {
+    color: #a5b4fc;
+    font-size: 18px;
+}
+
+#custom-cpu-memory {
+    color: #a5b4fc;
+    font-size: 14px;
+}
+
+#power-profiles-daemon {
+    font-size: 15px;
+    padding: 0 8px 0 6px;
+    border-radius: 4px 0 0 4px;
+}
+
+#pulseaudio {
+    font-size: 13px;
+    padding: 1px 12px 0 6px;
+    border-radius: 0 4px 4px 0;
+}
+
+#backlight {
+    font-size: 17px;
+    border-radius: 0px;
+    padding: 0 9px 0 7px;
+}
+
+#custom-updates,
+#network {
+    font-size: 13px;
+    border-radius: 0px;
+    padding: 0 0px 0 5px;
+}
+#tray {
+    box-shadow: inset 0 0 0 1px #1e3a8a;
+    padding: 0 9px 0 12px;
+}
+
+#pulseaudio,
+#backlight,
+#power-profiles-daemon,
+#network {
+    margin: 0;
+}
+#custom-logo,
+#custom-folders,
+#custom-favs {
+    font-size: 17px;
+    color: #a5b4fc;
+    padding: 0 15px 0 10px;
+}
+#custom-folders {
+    padding: 0 25px 0 10px;
+}
+/* === Tooltip === */
+tooltip {
+    border-radius: 8px;
+    padding: 6px 12px;
+    background-color: #101013;
+    font-size: 12px;
+    color: #10b981;
+    box-shadow: 0 2px 8px rgba(30, 58, 138, 0.6);
+}
+
+tooltip label {
+    padding: 0;
+    background-color: transparent;
+    color: inherit;
+    font-weight: 500;
+}
+
+/* === Hover Effects for Buttons / Modules === */
+button:hover,
+#window:hover,
+#power-profiles-daemon:hover,
+#backlight:hover,
+#network:hover,
+#pulseaudio:hover,
+#battery:hover {
+    box-shadow: inset 0 0 0 1px #10b981;
+    color: #a5b4fc;
+}
+
+#custom-favs:hover,
+#custom-folders:hover,
+#clock:hover,
+#custom-cpu-memory:hover,
+#custom-logo:hover,
+#clock:hover {
+    color: #10b981;
+}
+#custom-power:hover {
+    color: #c24646;
+}

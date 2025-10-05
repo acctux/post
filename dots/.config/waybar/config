@@ -1,0 +1,221 @@
+{
+  "layer": "top",
+  "position": "top",
+  "icon-theme": "WhiteSur-grey-dark",
+  "modules-left": [
+    "custom/logo",
+    "custom/favs",
+    "custom/folders",
+    "tray",
+    "battery",
+    "power-profiles-daemon",
+    "network",
+    "backlight",
+    "pulseaudio",
+    "custom/updates",
+    "custom/cpu-memory",
+  ],
+  "modules-center": ["hyprland/window"],
+  "modules-right": [
+    "hyprland/workspaces",
+    "clock",
+    "custom/power"
+  ],
+  "wlr/taskbar": {
+    "format": "{icon}",
+    "icon-size": 18,
+    "tooltip-format": "{title}",
+    "on-click": "activate",
+    "on-click-middle": "close",
+    "ignore-list": [
+      "Alacritty",
+      "kitty"
+    ],
+    "app_ids-mapping": {
+      "firefoxdeveloperedition": "firefox-developer-edition"
+    },
+    "rewrite": {
+      "Firefox Web Browser": "Firefox",
+      "Foot Server": "Terminal"
+    }
+  },
+  // Hyprland Window
+  "hyprland/window": {
+    "max-length": 60,
+    "rewrite": {
+      "(.*) - Brave": "$1",
+      "(.*) - Chromium": "$1",
+      "(.*) - Brave Search": "$1",
+      "(.*) - Outlook": "$1",
+      "(.*) Microsoft Teams": "$1"
+    },
+    "separate-outputs": true
+  },
+  "tray": {
+    "spacing": 6
+  },
+  "network": {
+    "format": "{ifname}",
+    "format-wifi": " {signalStrength}%",
+    "format-ethernet": "  {ifname}",
+    "format-disconnected": "Disconnected ⚠",
+    "tooltip-format": " {ifname} via {gwaddri}",
+    "tooltip-format-wifi": "  {ifname} @ {essid}\nIP: {ipaddr}\nStrength: {signalStrength}%\nFreq: {frequency}MHz\nUp: {bandwidthUpBits} Down: {bandwidthDownBits}",
+    "tooltip-format-ethernet": " {ifname}\nIP: {ipaddr}\n up: {bandwidthUpBits} down: {bandwidthDownBits}",
+    "tooltip-format-disconnected": "Disconnected",
+    "max-length": 3,
+    "on-click": "alacritty -e nmtui",
+    "on-click-right": "~/.config/ml4w/scripts/nm-applet.sh toggle",
+  },
+  "hyprland/workspaces": {
+    "on-scroll-up": "hyprctl dispatch workspace r+1",
+    "on-scroll-down": "hyprctl dispatch workspace r-1",
+    "on-click": "activate",
+    "active-only": false,
+    "all-outputs": true,
+    "format": "{}",
+    "format-icons": {
+      "urgent": "",
+      "active": "",
+      "default": ""
+    },
+    "persistent-workspaces": {
+      "*": 5
+    }
+  },
+  "custom/cpu-memory": {
+    "format": "{}",
+    "exec": "/home/nick/.local/bin/waybar/cpu_memory.sh",
+    "return-type": "json",
+    "interval": 5,
+    "on-click": "alacritty -e btop",
+    "tooltip": true
+  },
+  "pulseaudio": {
+    "scroll-step": 2, // %, can be a float
+    "format": "{icon}",
+    "format-bluetooth": "{volume}% {icon} {format_source}",
+    "format-bluetooth-muted": " {icon} {format_source}",
+    "format-muted": " {format_source}",
+    "format-source": "{volume}% ",
+    "format-source-muted": "",
+    "format-icons": {
+      "headphone": " ",
+      "hands-free": " ",
+      "headset": " ",
+      "phone": " ",
+      "portable": " ",
+      "car": " ",
+      "default": [
+        "",
+        "",
+        ""
+      ]
+    },
+    "on-click": "pavucontrol",
+    "on-scroll-up": "pactl set-sink-volume @DEFAULT_SINK@ +2%",
+    "on-scroll-down": "pactl set-sink-volume @DEFAULT_SINK@ -2%",
+    "scroll-step": 2
+  },
+  "backlight": {
+    "format": "{icon}",
+    "format-icons": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    "scroll-step": 10
+  },
+  // Battery
+  "battery": {
+    "interval": 1,
+    "states": {
+      "good": 95,
+      "warning": 30,
+      "critical": 15
+    },
+    "format": "{icon} {capacity}%",
+    "format-charging": "  {capacity}%",
+    "format-plugged": "  {capacity}%",
+    "format-alt": "{icon}  {time}",
+    // "format-good": "", // An empty format will hide the module
+    "format-full": "",
+    "format-icons": [
+      " ",
+      " ",
+      " ",
+      " ",
+      " "
+    ]
+  },
+  "clock": {
+    "timezone": "America/New_York",
+    "tooltip-format": "{:%A, %B %d}",
+    "format-alt": "{:%a, %d %b %Y} 🕒",
+    "format": "{:%H:%M}",
+    "interval": 60
+  },
+    // Power Profiles Daemon
+  "power-profiles-daemon": {
+    "format": "{icon}",
+    "tooltip-format": "Power profile: {profile}\nDriver: {driver}",
+    "tooltip": true,
+    "format-icons": {
+      "default": "",
+      "performance": "",
+      "balanced": "",
+      "power-saver": ""
+    }
+  },
+  "custom/updates": {
+    "format": "  {}",
+    "escape": true,
+    "return-type": "json",
+    "exec": "~/.config/ml4w/scripts/updates.sh",
+    "interval": 3600,
+    "signal": 1,
+    "hide-empty-text": true,
+    "on-click": "~/.config/ml4w/settings/installupdates.sh"
+  },
+  "custom/music": {
+    "format": "{} ",
+    "escape": true,
+    "interval": 5,
+    "tooltip": false,
+    "exec": "playerctl metadata --format='{{ artist }} - {{ title }}'",
+    "on-click": "playerctl play-pause",
+    "max-length": 40
+  },
+  "custom/logo": {
+    "format": "",
+    "tooltip": false,
+    "on-click": "sh -c '(sleep 0s; fuzzel)' & disown"
+  },
+  "custom/folders": {
+    "format": "",
+    "tooltip": false,
+    "on-click": "/home/nick/.local/bin/waybar/favorite_dirs.sh"
+  },
+  "custom/favs": {
+    "format": "",
+    "tooltip": false,
+    "on-click": "/home/nick/.local/bin/waybar/fav_menu.sh"
+  },
+  "custom/power": {
+    "format": "󰤆",
+    "tooltip": false,
+    "on-click": "sh -c '(sleep 0s; wlogout)' & disown"
+  }
+}

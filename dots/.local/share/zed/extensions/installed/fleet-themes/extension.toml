@@ -1,0 +1,23 @@
+id = "fleet-themes"
+name = "Fleet Themes"
+version = "1.2.0"
+schema_version = 1
+description = "🚢 Transform Zed with Fleet's sleek, modern aesthetic for a sublime coding experience."
+repository = "https://github.com/skarline/zed-fleet-themes"
+authors = ["Lihuen Molina <lihue.molina@gmail.com>"]
+themes = ["themes/fleet.json"]
+icon_themes = []
+languages = []
+capabilities = []
+
+[lib]
+
+[grammars]
+
+[language_servers]
+
+[context_servers]
+
+[slash_commands]
+
+[indexed_docs_providers]

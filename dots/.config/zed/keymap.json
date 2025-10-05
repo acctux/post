@@ -1,0 +1,73 @@
+[
+  {
+    "context": "Editor && vim_mode == insert",
+    "bindings": {
+      "ctrl-shift-up": "editor::MoveLineUp",
+      "ctrl-shift-down": "editor::MoveLineDown",
+      "ctrl-c": "editor::Copy",
+      "ctrl-v": "editor::Paste",
+      "ctrl-x": "editor::Cut"
+    }
+  },
+  {
+    "context": "Editor && vim_mode == normal",
+    "bindings": {}
+  },
+  {
+    "context": "Editor && vim_mode == visual",
+    "bindings": {
+      "ctrl-shift-up": "editor::MoveLineUp",
+      "ctrl-shift-down": "editor::MoveLineDown",
+      "ctrl-c": "editor::Copy",
+      "ctrl-v": "editor::Paste",
+      "ctrl-x": "editor::Cut"
+    }
+  },
+  {
+    "context": "Editor && vim_mode == replace",
+    "bindings": {}
+  },
+  {
+    "context": "global",
+    "bindings": {
+      "ctrl-/": "editor::ToggleComments",
+      "ctrl-c": "editor::Copy",
+      "ctrl-v": "editor::Paste",
+      "ctrl-x": "editor::Cut"
+    }
+  },
+  {
+    "context": "vim_mode == visual",
+    "bindings": {
+      "ctrl-v": [
+        "vim::Paste",
+        {
+          "preserve_clipboard": true
+        }
+      ]
+    }
+  },
+  {
+    "context": "vim_mode == visual",
+    "bindings": {
+      "shift-p": null
+    }
+  },
+  {
+    "context": "vim_mode == visual",
+    "bindings": {
+      "g shift-r": null
+    }
+  },
+  {
+    "context": "((vim_mode == normal || vim_mode == helix_normal) && !menu)",
+    "bindings": {
+      "ctrl-v": [
+        "vim::Paste",
+        {
+          "before": true
+        }
+      ]
+    }
+  }
+]
