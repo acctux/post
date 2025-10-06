@@ -10,69 +10,60 @@
 # ╚═╝  ╚═══╝  ╚═════╝  ╚═╝  ╚═╝ ╚═╝  ╚═╝ ╚═════╝     ╚═╝  ╚═╝ ╚═╝  ╚═╝  ╚═════╝ ╚═╝  ╚═╝
 
 # -------------------------------------------------------------------------
-# The one-opinion opinionated automated Arch Linux Installer
+#             The one-opinion opinionated automated Arch Linux Installer
 # -------------------------------------------------------------------------
-
-# Robust Arch Linux base installer – improved version
-set -Eeuo pipefail
-
-SCRIPT_DIR="$(dirname "$0")"
-source "$SCRIPT_DIR/utils.sh"
-source "$SCRIPT_DIR/conf.sh"
-source "$SCRIPT_DIR/ark.sh"
-# source "$SCRIPT_DIR/animals/bonobo-chroot-sys.sh"
-# source "$SCRIPT_DIR/animals/dingo-reflector-chaotic.sh"
-# source "$SCRIPT_DIR/animals/echidna-gpu-flood.sh"
-# source "$SCRIPT_DIR/animals/fox-copy-etc.sh"
-# source "$SCRIPT_DIR/animals/gecko-sys-serv.sh"
-# source "$SCRIPT_DIR/animals/hyena-mariadb.sh"
-# source "$SCRIPT_DIR/conf/test_pac.sh"
-# source "$SCRIPT_DIR/conf/conf_sysctl.sh"
-
-# Runtime variables (initially empty)
+set -euo pipefail
 
 #######################################
-# Main
+# # Sourcing # # # # # # # # # # # # #
+#######################################
+
+SCRIPT_DIR="$(dirname "$0")"
+source "$SCRIPT_DIR/conf_user_stale.sh"
+source "$SCRIPT_DIR/setup-folders.sh"
+source "$SCRIPT_DIR/import-personal-keys.sh"
+source "$SCRIPT_DIR/clone-gits.sh"
+source "$SCRIPT_DIR/hide-apps.sh"
+
+systemctl enable --now ly.service
+
+refresh_caches() {
+  local cache_update_flag="$HOME/.cache/fresh/refresh_cache.done"
+
+  if [ ! -f "$cache_update_flag" ]; then
+    XDG_MENU_PREFIX=arch- kbuildsycoca6
+    log INFO "kbuildsycoca6 ran successfully."
+    fc-cache -f
+    if command -v tldr &>/dev/null; then
+      tldr --update || true
+    fi
+    touch "$cache_update_flag"
+  fi
+  echo "kbuildsycoca6 already ran, skipping."
+}
+
+#######################################
+#  Main
 #######################################
 
 main() {
-  # trap 'error_trap $LINENO $BASH_COMMAND' ERR
+  setup_folders
+  import_personal_keys
+  refresh_caches
+  clone_gits
+  echo -ne "
+   -------------------------------------------------------------------------------------
+   ███╗   ██╗  ██████╗   █████╗  ██╗  ██╗  ██████╗     █████╗  ██████╗   ██████╗ ██╗  ██╗
+   ████╗  ██║ ██╔═══██╗ ██╔══██╗ ██║  ██║ ██╔════╝    ██╔══██╗ ██╔══██╗ ██╔════╝ ██║  ██║
+   ██╔██╗ ██║ ██║   ██║ ███████║ ███████║ ╚█████╗     ███████║ ██████╔╝ ██║      ███████║
+   ██║╚██╗██║ ██║   ██║ ██╔══██║ ██╔══██║  ╚═══██╗    ██╔══██║ ██╔══██╗ ██║      ██╔══██║
+   ██║ ╚████║ ╚██████╔╝ ██║  ██║ ██║  ██║ ██████╔╝    ██║  ██║ ██║  ██║ ╚██████╗ ██║  ██║
+   ╚═╝  ╚═══╝  ╚═════╝  ╚═╝  ╚═╝ ╚═╝  ╚═╝ ╚═════╝     ╚═╝  ╚═╝ ╚═╝  ╚═╝  ╚═════╝ ╚═╝  ╚═╝
 
-  # require_root
-  # check_dependencies
-
-  # trap unmount_mounted EXIT
-  info "Starting Arch Linux installation"
-  unmount_mounted
-  ark
-  arch-chroot /mnt "$HOME/Noah/animals/chameleon-zram-config.sh"
-  # aardvark
-  bonobo
-  chameleon
-  dingo
-
-  #     pacman -Sy archlinux-keyring
-  #     ( arch-chroot "$HOME_MNT" /usr/bin/runuser -u $USERNAME -- /home/$USERNAME/scripts/zebra-user.sh )|& tee 2-user.log
-
-  #     echo -ne "
-  # -------------------------------------------------------------------------
-  # ███╗   ██╗  ██████╗   █████╗  ██╗  ██╗  ██████╗     █████╗  ██████╗   ██████╗ ██╗  ██╗
-  # ████╗  ██║ ██╔═══██╗ ██╔══██╗ ██║  ██║ ██╔════╝    ██╔══██╗ ██╔══██╗ ██╔════╝ ██║  ██║
-  # ██╔██╗ ██║ ██║   ██║ ███████║ ███████║ ╚█████╗     ███████║ ██████╔╝ ██║      ███████║
-  # ██║╚██╗██║ ██║   ██║ ██╔══██║ ██╔══██║  ╚═══██╗    ██╔══██║ ██╔══██╗ ██║      ██╔══██║
-  # ██║ ╚████║ ╚██████╔╝ ██║  ██║ ██║  ██║ ██████╔╝    ██║  ██║ ██║  ██║ ╚██████╗ ██║  ██║
-  # ╚═╝  ╚═══╝  ╚═════╝  ╚═╝  ╚═╝ ╚═╝  ╚═╝ ╚═════╝     ╚═╝  ╚═╝ ╚═╝  ╚═╝  ╚═════╝ ╚═╝  ╚═╝
-
-  # -------------------------------------------------------------------------
-  #                     Automated Arch Linux Installer
-  # -------------------------------------------------------------------------
-  #                 Done - Please Eject Install Media and Reboot
-  # "
-  #     if yes_no_prompt "Reboot now?"; then
-  #         reboot
-  #     fi
+   -------------------------------------------------------------------------------------
+                            Automated Arch Linux Installer
+   -------------------------------------------------------------------------------------
+                              Done - Launch Hyprland?
+   "
 }
-
-if [[ "${BASH_SOURCE[0]}" == "$0" ]]; then
-  main "$@"
-fi
+main "$@"
